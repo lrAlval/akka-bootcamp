@@ -4,6 +4,13 @@
     {
         #region System Messages
         public class ContinueProcessing { }
+        public class ValidateInput
+        {
+            public string Input { get; set; }
+
+            public ValidateInput(string input) => Input = input;
+        }
+        
         #endregion
 
         #region Success Messages

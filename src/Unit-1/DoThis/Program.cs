@@ -17,8 +17,8 @@ namespace WinTail
             //PrintInstructions();
 
             // time to make your first actors!
-            //YOU NEED TO FILL IN HERE
             var writerActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleWriterActor()));
+            var validateActor = MyActorSystem.ActorOf(Props.Create(() => new ValidationActor(writerActor)));
             var readerActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleReaderActor(writerActor)));
 
             // tell console reader to begin
@@ -26,22 +26,6 @@ namespace WinTail
             readerActor.Tell(ConsoleReaderActor.StartCommand);
             // blocks the main thread from exiting until the actor system is shut down
             MyActorSystem.WhenTerminated.Wait();
-        }
-
-        private static void PrintInstructions()
-        {
-            Console.WriteLine("Write whatever you want into the console!");
-            Console.Write("Some lines will appear as");
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write(" red ");
-            Console.ResetColor();
-            Console.Write(" and others will appear as");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(" green! ");
-            Console.ResetColor();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Type 'exit' to quit this application at any time.\n");
         }
     }
     #endregion

@@ -6,6 +6,9 @@
 *.user
 *.sln.docstates
 *.userprefs
+*.ide-shm
+*.ide-wal
+
 
 # Build results
 [Dd]ebug/
@@ -174,6 +177,7 @@ UpgradeLog*.htm
 # SQL Server files
 *.mdf
 *.ldf
+*.sqlite3
 
 # Business Intelligence projects
 *.rdl.data
