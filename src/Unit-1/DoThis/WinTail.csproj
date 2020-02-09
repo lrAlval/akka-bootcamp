@@ -53,10 +53,13 @@
   <ItemGroup>
     <Compile Include="ConsoleReaderActor.cs" />
     <Compile Include="ConsoleWriterActor.cs" />
+    <Compile Include="FileObserver.cs" />
+    <Compile Include="Lesson4\TailActor.cs" />
+    <Compile Include="Lesson4\TailCoordinatorActor.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValidateActor.cs" />
+    <Compile Include="ValidationActor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

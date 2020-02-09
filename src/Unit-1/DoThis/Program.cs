@@ -16,14 +16,22 @@ namespace WinTail
 
             //PrintInstructions();
 
-            // time to make your first actors!
-            var writerActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleWriterActor()));
-            var validateActor = MyActorSystem.ActorOf(Props.Create(() => new ValidationActor(writerActor)));
-            var readerActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleReaderActor(writerActor)));
+            // create top-level actors within the actor system
+            var consoleWriterProps = Props.Create<ConsoleWriterActor>();
+            var consoleWriterActor = MyActorSystem.ActorOf(consoleWriterProps, "consoleWriterActor");
 
-            // tell console reader to begin
-            //YOU NEED TO FILL IN HERE
-            readerActor.Tell(ConsoleReaderActor.StartCommand);
+            var tailCoordinatorProps = Props.Create(() => new TailCoordinatorActor());
+            var tailCoordinatorActor = MyActorSystem.ActorOf(tailCoordinatorProps, "tailCoordinatorActor");
+
+            var fileValidatorActorProps = Props.Create(() => new FileValidatorActor(consoleWriterActor, tailCoordinatorActor));
+            var fileValidatorActor = MyActorSystem.ActorOf(fileValidatorActorProps, "validationActor");
+
+            var consoleReaderProps = Props.Create<ConsoleReaderActor>(fileValidatorActor);
+            var consoleReaderActor = MyActorSystem.ActorOf(consoleReaderProps, "consoleReaderActor");
+
+            // begin processing
+            consoleReaderActor.Tell(ConsoleReaderActor.StartCommand);
+
             // blocks the main thread from exiting until the actor system is shut down
             MyActorSystem.WhenTerminated.Wait();
         }
